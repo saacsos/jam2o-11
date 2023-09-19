@@ -14,6 +14,6 @@
 </template>
 
 <script setup lang="ts">
-const { data: artists, pending } = await useLazyFetch<any>("http://localhost/api/artist")
-
+// const config = useRuntimeConfig()
+const { data: artists, pending } = await useMyFetch<any>("artist", {})
 </script>

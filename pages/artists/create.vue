@@ -17,15 +17,17 @@
 </template>
 
 <script setup lang="ts">
+
 const formData = ref({
   name: ""
 })
 const errorMessage = ref("")
 
 async function onSubmit() {
+  
   const { name } = formData.value
 
-  const { data: response, error } = await useFetch<any>("http://localhost/api/artist", {
+  const { data: response, error } = await useMyFetch<any>("artist", {
     method: "POST",
     body: { name, image_path: "image url" }
   })

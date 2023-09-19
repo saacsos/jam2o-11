@@ -1,4 +1,4 @@
 <template>
-  <h1>Hello Nuxt</h1>
+  <NavBar></NavBar>
   <slot />
 </template>
