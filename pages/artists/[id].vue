@@ -1,34 +1,41 @@
 <template>
   <h1>{{ pageTitle }}</h1>
 
-  <img style="width:200px" src="https://www.thesprucepets.com/thmb/uQnGtOt9VQiML2oG2YzAmPErrHo=/5441x0/filters:no_upscale():strip_icc()/all-about-tabby-cats-552489-hero-a23a9118af8c477b914a0a1570d4f787.jpg" alt="">
-  <img style="width:300px" :src="image">
-  <div v-for="artist of artists" :key="artist.id">
-    <div @click="change(artist.image)">
-      {{ artist.name }}
+  <div v-if="artist" class="text-3xl mx-4">
+    {{ artist.name }} {{  artist.id }}
+  </div>
+
+  <div v-if="artist">
+    <div v-for="song in artist.songs" :key="song.id">
+      <div class="text-xl mx-6 my-2">
+        {{ song.title }}
+      </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 const route = useRoute()
+// const config = useRuntimeConfig()
+// console.log(config.public.apiBaseURL)
 const pageTitle = `Artist No. ${route.params.id}`
-const image = useState<string>(undefined)
 
-const change = function (_image: string) {
-  image.value = _image
+type Song = {
+  id: number,
+  title: string
 }
 
-const artists = [
-  {
-    id: 1,
-    name: "Getsunova",
-    image: "https://www.alleycat.org/wp-content/uploads/2019/03/FELV-cat.jpg"
-  },
-  {
-    id: 2,
-    name: "4EVE",
-    image: "https://cdn.britannica.com/16/234216-050-C66F8665/beagle-hound-dog.jpg"
-  }
-]
+type Artist = {
+  id: BigInteger,
+  name: string,
+  songs: Array<Song>
+}
+
+
+const { data: artist } = await useMyFetch<any>(
+  `artist/${route.params.id}`,
+  {}
+)
+
+
 </script>
